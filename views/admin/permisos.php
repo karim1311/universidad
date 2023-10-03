@@ -74,11 +74,11 @@
                             <td class="px-3 py-1 text-end"><?= $usuario["role_nombre"] ?></td>
                             <td class="px-3 py-1">
                                 <div class="flex gap-4">
-                                    <button value=<?= $usuario["usuario_id"] ?> class="btn-delete bg-red-300 px-2 py-1 rounded-md">Eliminar</button>
+                                    
                                     <div class="modal">
                                         <form action="/index.php" method="post">
                                             <input type="text" hidden name="id" value="<?= $usuario["usuario_id"] ?>">
-                                            <button type="submit" class="bg-red-300 px-2 py-1 rounded-md">Eliminar</button>
+                                            
                                         </form>
                                     </div>
                                     <a href="/views/admin/editrol.php?usuario_id=<?= $usuario["usuario_id"] ?>" class="bg-blue-400 px-2 py-1 rounded-md">Editar</a>

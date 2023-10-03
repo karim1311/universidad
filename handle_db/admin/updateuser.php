@@ -15,6 +15,6 @@ if (isset($_POST['update'])) {
     $stmnt->execute(['correo' => $correo, 'rol' => $rol, 'id' => $usuario_id]);
 
     // Redirigir al usuario a la página de roles
-    header("Location: /views/roles.php");
+    header("Location: /views/admin/permisos.php");
 }
 ?>

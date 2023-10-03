@@ -27,7 +27,7 @@ $usuario = $stmnt->fetch(PDO::FETCH_ASSOC);
 <body class="h-screen flex justify-center box-border w-screen">
     <section class="bg-[#fff5d2] w-full">
         <div class="bg-white p-4 rounded-md border flex flex-col justify-center items-center">
-            <form action="/updateuser.php" method="post">
+            <form action="/handle_db/admin/updateuser.php" method="post">
                 <h1>Editar Permiso:</h1>
                 <input type="hidden" name="usuario_id" value="<?= $usuario['usuario_id'] ?>">
                 <label for="correo">Correo:</label><br>

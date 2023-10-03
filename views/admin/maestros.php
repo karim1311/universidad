@@ -29,7 +29,7 @@
                 <a href="/views/admin/maestros.php">Maestros</a>
             </div>
             <div>
-                <a href="alumnos.php"></a>
+                <a href="alumnos.php">Alumnos</a>
             </div>
             <div>
                 <a href="clases.php">Clases</a>
@@ -82,9 +82,8 @@
                             <td class="px-3 py-1">
                                 <div class="flex gap-4">
                                     <a href="/views/admin/edit_maestro.php?usuario_id=<?= $usuario["usuario_id"] ?>" class="bg-blue-400 px-2 py-1 rounded-md">Editar</a>
-                                    <button value=<?= $usuario["usuario_id"] ?> class="btn-delete bg-red-300 px-2 py-1 rounded-md">Eliminar</button>
                                     <div class="modal">
-                                        <form action="/index.php" method="post">
+                                        <form action="/handle_db/admin/delete_maestro.php" method="post">
                                             <input type="text" hidden name="id" value="<?= $usuario["usuario_id"] ?>">
                                             <button type="submit" class="bg-red-300 px-2 py-1 rounded-md">Eliminar</button>
                                         </form>
