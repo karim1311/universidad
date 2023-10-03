@@ -60,10 +60,11 @@
                     // (1) Definir SQL
                     $comando = $pdo->prepare("SELECT materias.materia_id, materias.materia_nombre, usuarios.usuario_nombre, COUNT(alumnos_materias.alumno_id) AS numero_de_alumnos
                     FROM materias
-                    JOIN maestros_materias ON materias.materia_id = maestros_materias.materia_id
-                    JOIN usuarios ON maestros_materias.maestro_id = usuarios.usuario_id
-                    JOIN alumnos_materias ON materias.materia_id = alumnos_materias.materia_id
-                    GROUP BY materias.materia_id, materias.materia_nombre, usuarios.usuario_nombre;");
+                    LEFT JOIN maestros_materias ON materias.materia_id = maestros_materias.materia_id
+                    LEFT JOIN usuarios ON maestros_materias.maestro_id = usuarios.usuario_id
+                    LEFT JOIN alumnos_materias ON materias.materia_id = alumnos_materias.materia_id
+                    GROUP BY materias.materia_id, materias.materia_nombre, usuarios.usuario_nombre;
+                    ");
 
                     // (3)Ejecutar SQL
                     $comando->execute();
