@@ -61,8 +61,10 @@
                     // (1) Definir SQL
                     $comando = $pdo->prepare("SELECT *
                     FROM usuarios
-                    JOIN maestros_materias ON usuarios.usuario_id = maestros_materias.maestro_id
-                    JOIN materias ON maestros_materias.materia_id = materias.materia_id;");
+                    LEFT JOIN maestros_materias ON usuarios.usuario_id = maestros_materias.maestro_id
+                    LEFT JOIN materias ON maestros_materias.materia_id = materias.materia_id
+                    WHERE usuarios.role_id = 2;
+                    ");
 
                     // (3)Ejecutar SQL
                     $comando->execute();

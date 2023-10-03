@@ -39,7 +39,7 @@
     <section class="bg-[#fff5d2] w-full">
         <div class="flex justify-evenly">
             <p>Informacion de Clases</p>
-            <a href="create_alumno.php">Agregar Clase</a>
+            <a href="create_clase.php">Agregar Clase</a>
         </div>
     <div class="bg-blue-200 p-4 rounded-md flex justify-center items-center">
             <table class="border justify-center items-center bg-white">
