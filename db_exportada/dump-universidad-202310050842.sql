@@ -29,11 +29,11 @@ CREATE TABLE `alumnos_materias` (
   `calificacion` float DEFAULT NULL,
   `mensaje` text DEFAULT NULL,
   PRIMARY KEY (`am_id`),
-  KEY `materia_id` (`materia_id`),
   KEY `alumnos_materias_ibfk_1` (`alumno_id`),
+  KEY `alumnos_materias_ibfk_2` (`materia_id`),
   CONSTRAINT `alumnos_materias_ibfk_1` FOREIGN KEY (`alumno_id`) REFERENCES `usuarios` (`usuario_id`) ON UPDATE CASCADE,
-  CONSTRAINT `alumnos_materias_ibfk_2` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`materia_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `alumnos_materias_ibfk_2` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`materia_id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `alumnos_materias` (
 
 LOCK TABLES `alumnos_materias` WRITE;
 /*!40000 ALTER TABLE `alumnos_materias` DISABLE KEYS */;
+INSERT INTO `alumnos_materias` VALUES (6,3,1,NULL,NULL),(14,18,3,NULL,NULL),(16,18,11,NULL,NULL),(17,18,16,NULL,NULL),(18,18,9,NULL,NULL),(19,5,1,NULL,NULL),(20,5,10,NULL,NULL),(21,5,3,NULL,NULL),(22,3,3,NULL,NULL),(23,3,16,NULL,NULL),(24,3,11,NULL,NULL),(25,18,1,NULL,NULL);
 /*!40000 ALTER TABLE `alumnos_materias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +63,7 @@ CREATE TABLE `maestros_materias` (
   KEY `alumnos_materias_ibfk_1` (`maestro_id`),
   CONSTRAINT `maestros_materias_ibfk_1` FOREIGN KEY (`maestro_id`) REFERENCES `usuarios` (`usuario_id`) ON UPDATE CASCADE,
   CONSTRAINT `maestros_materias_ibfk_2` FOREIGN KEY (`materia_id`) REFERENCES `materias` (`materia_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +72,7 @@ CREATE TABLE `maestros_materias` (
 
 LOCK TABLES `maestros_materias` WRITE;
 /*!40000 ALTER TABLE `maestros_materias` DISABLE KEYS */;
-INSERT INTO `maestros_materias` VALUES (1,2,1,NULL),(13,15,3,NULL);
+INSERT INTO `maestros_materias` VALUES (1,2,1,NULL),(35,16,10,NULL),(36,15,11,NULL),(38,19,16,NULL),(39,20,15,NULL),(40,20,9,NULL);
 /*!40000 ALTER TABLE `maestros_materias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +87,7 @@ CREATE TABLE `materias` (
   `materia_id` int(11) NOT NULL AUTO_INCREMENT,
   `materia_nombre` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`materia_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `materias` (
 
 LOCK TABLES `materias` WRITE;
 /*!40000 ALTER TABLE `materias` DISABLE KEYS */;
-INSERT INTO `materias` VALUES (1,'Matematicas'),(2,'Literatura'),(3,'Programación');
+INSERT INTO `materias` VALUES (1,'Matematicas'),(3,'Programación'),(9,'Guarani'),(10,'Biologia'),(11,'Biomedicina'),(15,'Sin asignar'),(16,'Literatura');
 /*!40000 ALTER TABLE `materias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +167,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`usuario_id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +176,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'admin@admin','admin','admin',NULL,NULL,1),(2,'maestro@maestro','maestro','maestro',NULL,NULL,2),(3,'alumno@alumno','alumno','alumno','2001-08-03','901 Autumn Leaf Circle',3),(5,'fer@fer','','fernanda ortega','2002-12-12','obregon 19',3),(15,'aldo@aldo','','aldo aldo','1999-01-01','aldo',2),(16,'harold@harold','','harold carazas','1998-01-01','peru',2);
+INSERT INTO `usuarios` VALUES (1,'admin@admin','admin','admin',NULL,NULL,1),(2,'maestro@maestro','maestro','maestro',NULL,NULL,2),(3,'alumno@alumno','alumno','alumno','2001-08-03','901 Autumn Leaf Circle',3),(5,'fer@fer','','fernanda ortega','2002-12-12','obregon 19',3),(15,'aldo@aldo','','aldo aldo','1999-01-01','aldo',2),(16,'harold@harold','','harold carazas','1998-01-01','peru',2),(18,'karim@karim','','karim valenzuela','1993-03-31','universo',3),(19,'mario@mario','','mario lopez','1990-04-05','guamuchil',2),(20,'wil@wil','','wil valdez','1995-03-03','rio bravo',2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,4 +193,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-03 15:53:21
+-- Dump completed on 2023-10-05  7:42:08
