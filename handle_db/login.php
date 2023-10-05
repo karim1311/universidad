@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     break;
                 case $row["role_id"] === 3;
                     $_SESSION["role"] = 3;
+                    $_SESSION["usuario_id"] = $row["usuario_id"];
                     header("Location: /views/alumno/dashboard.php");
                     break;
 

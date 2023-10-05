@@ -27,7 +27,7 @@ if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 2) {
             </div>
         </header>
         <div class="bg-slate-500">
-            <p><?= ["usuario_nombre"] ?></p>
+            Nombre
         </div>
         <?php
         $usuario_id = $_SESSION["usuario_id"];
