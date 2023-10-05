@@ -1,4 +1,12 @@
 <!-- archivo permisos dentro de carpeta admin dentro de views -->
+<?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,6 +71,7 @@
                     LEFT JOIN maestros_materias ON materias.materia_id = maestros_materias.materia_id
                     LEFT JOIN usuarios ON maestros_materias.maestro_id = usuarios.usuario_id
                     LEFT JOIN alumnos_materias ON materias.materia_id = alumnos_materias.materia_id
+                    WHERE materias.materia_id <> 15
                     GROUP BY materias.materia_id, materias.materia_nombre, usuarios.usuario_nombre;
                     ");
 
@@ -81,11 +90,10 @@
                             <td class="px-3 py-1"><?= $usuario["numero_de_alumnos"] ?></td>
                             <td class="px-3 py-1">
                                 <div class="flex gap-4">
-                                    <a href="/views/admin/edit_materia.php?usuario_id=<?= $usuario["materia_id"] ?>" class="bg-blue-400 px-2 py-1 rounded-md">Editar</a>
-                                    <button value=<?= $usuario["materia_id"] ?> class="btn-delete bg-red-300 px-2 py-1 rounded-md">Eliminar</button>
+                                    <a href="/views/admin/edit_clase.php?materia_id=<?= $usuario["materia_id"] ?>" class="bg-blue-400 px-2 py-1 rounded-md">Editar</a>
                                     <div class="modal">
-                                        <form action="/index.php" method="post">
-                                            <input type="text" hidden name="id" value="<?= $usuario["materia_id"] ?>">
+                                        <form action="/handle_db/admin/delete_clase.php" method="post">
+                                            <input type="text" hidden name="materia_id" value="<?= $usuario["materia_id"] ?>">
                                             <button type="submit" class="bg-red-300 px-2 py-1 rounded-md">Eliminar</button>
                                         </form>
                                     </div>

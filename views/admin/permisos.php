@@ -1,4 +1,12 @@
 <!-- archivo permisos dentro de carpeta admin dentro de views -->
+<?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,11 +42,14 @@
                 <a href="alumnos.php">Alumnos</a>
             </div>
             <div>
-                <p>Clases</p>
+                <a href="clases.php">Clases</a>
             </div>
         </section>
     </aside>
     <section class="bg-[#fff5d2] w-full">
+        <div>
+            <a href="/handle_db/logout.php">Cerrar sesión</a>
+        </div>
         <div class="bg-blue-200 p-4 rounded-md flex justify-center items-center">
             <table class="border justify-center items-center bg-white">
                 <thead>

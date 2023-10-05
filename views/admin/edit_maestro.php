@@ -1,5 +1,13 @@
 <!--archivo edit_maestro.php dentro de admin dentro de views  -->
 <?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+?>
+<?php
 // Conexión a la base de datos
 require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
 
@@ -43,7 +51,7 @@ $usuario = $stmnt->fetch(PDO::FETCH_ASSOC);
                 <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<?= $usuario['fecha_nacimiento'] ?>"><br>
 
                 <label for="fecha_nacimiento">Clase Asignada</label>
-                <select id="rol" name="clase">
+                <select name="clase">
                     <?php
                     require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
 

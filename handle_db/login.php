@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     extract($_POST);
     require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
@@ -14,9 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     header("Location: /views/admin/dashboard.php");
                     break;
                 case $row["role_id"] === 2;
+                    $_SESSION["role"] = 2;
+                    $_SESSION["usuario_id"] = $row["usuario_id"];
+                    $_SESSION["usuario_nombre"] = $row["usuario_nombre"];
                     header("Location: /views/maestro/dashboard.php");
                     break;
                 case $row["role_id"] === 3;
+                    $_SESSION["role"] = 3;
                     header("Location: /views/alumno/dashboard.php");
                     break;
 

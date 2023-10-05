@@ -1,5 +1,12 @@
 <!--archivo editrol.php  -->
 <?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+
 // Conexión a la base de datos
 require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
 

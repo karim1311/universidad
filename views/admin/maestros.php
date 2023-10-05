@@ -1,6 +1,15 @@
 <!-- archivo maestros.php dentro de carpeta admin dentro de views -->
+<?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +17,7 @@
     <link href="/dist/output.css" rel="stylesheet" defer>
     <link rel="stylesheet" href="/src/input.css">
 </head>
+
 <body class="h-screen flex justify-center box-border w-screen">
     <aside class="flex flex-col min-h-screen border">
         <header class="flex border-b-2 border-gray-500 w-auto ">
@@ -16,7 +26,7 @@
                 <h1>Universidad</h1>
             </div>
         </header>
-        <div  class="bg-slate-500">
+        <div class="bg-slate-500">
             <p>admin</p>
             <p></p>
         </div>
@@ -40,7 +50,7 @@
         <div>
             <a href="create_maestro.php">Agregar Maestro</a>
         </div>
-    <div class="bg-blue-200 p-4 rounded-md flex justify-center items-center">
+        <div class="bg-blue-200 p-4 rounded-md flex justify-center items-center">
             <table class="border justify-center items-center bg-white">
                 <thead>
                     <tr>
@@ -56,15 +66,23 @@
                 <tbody>
                     <?php
                     // Cambiar el nombre de la base de datos, usuario y clave
-                    $pdo = new PDO('mysql:host=localhost;dbname=universidad','root','');
+                    $pdo = new PDO('mysql:host=localhost;dbname=universidad', 'root', '');
 
                     // (1) Definir SQL
-                    $comando = $pdo->prepare("SELECT *
-                    FROM usuarios
-                    LEFT JOIN maestros_materias ON usuarios.usuario_id = maestros_materias.maestro_id
+                    $comando = $pdo->prepare("
+                    SELECT 
+                        usuarios.usuario_id, 
+                        usuarios.usuario_nombre, 
+                        usuarios.correo, 
+                        usuarios.direccion, 
+                        usuarios.fecha_nacimiento, 
+                        GROUP_CONCAT(materias.materia_nombre SEPARATOR ', ') as clases_asignadas
+                    FROM usuarios 
+                    LEFT JOIN maestros_materias ON usuarios.usuario_id = maestros_materias.maestro_id 
                     LEFT JOIN materias ON maestros_materias.materia_id = materias.materia_id
-                    WHERE usuarios.role_id = 2;
-                    ");
+                    WHERE usuarios.role_id = 2
+                    GROUP BY usuarios.usuario_id
+                ");
 
                     // (3)Ejecutar SQL
                     $comando->execute();
@@ -80,7 +98,7 @@
                             <td class="px-3 py-1"><?= $usuario["correo"] ?></td>
                             <td class="px-3 py-1"><?= $usuario["direccion"] ?></td>
                             <td class="px-3 py-1"><?= $usuario["fecha_nacimiento"] ?></td>
-                            <td class="px-3 py-1"><?= $usuario["materia_nombre"] ?></td>
+                            <td class="px-3 py-1"><?= $usuario["clases_asignadas"] ?></td>
                             <td class="px-3 py-1">
                                 <div class="flex gap-4">
                                     <a href="/views/admin/edit_maestro.php?usuario_id=<?= $usuario["usuario_id"] ?>" class="bg-blue-400 px-2 py-1 rounded-md">Editar</a>
@@ -100,6 +118,7 @@
             </table>
         </div>
     </section>
-    
+
 </body>
+
 </html>

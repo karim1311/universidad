@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +42,7 @@
                 <a href="alumnos.php">Alumnos</a>
             </div>
             <div>
-                <p>Clases</p>
+                <a href="clases.php">Clases</a>
             </div>
         </section>
     </aside>

@@ -1,22 +1,19 @@
 <!-- archivo delete_alumno.php -->
 <?php
-// Comprobar si el formulario fue enviado
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Obtén los datos del formulario
+require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
+
+if (isset($_POST['id'])) {
     $usuario_id = $_POST['id'];
 
-    // Conexión a la base de datos
-    require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
+    // Eliminar al maestro de la tabla maestros_materias
+    $comando_eliminar_asignaciones = $pdo->prepare("DELETE FROM maestros_materias WHERE maestro_id = :maestro_id");
+    $comando_eliminar_asignaciones->execute(['maestro_id' => $usuario_id]);
 
-    // Eliminar las materias asignadas al usuario
-    $stmnt = $pdo->prepare("DELETE FROM alumnos_materias WHERE alumno_id = :id");
-    $stmnt->execute(['id' => $usuario_id]);
-
-    // Luego, eliminar al usuario
-    $stmnt = $pdo->prepare("DELETE FROM usuarios WHERE usuario_id = :id");
-    $stmnt->execute(['id' => $usuario_id]);
-
-    // Redirigir al usuario a la página de alumnos
-    header("Location: /views/admin/alumnos.php");
+    // Eliminar al maestro de la tabla usuarios
+    $comando_eliminar_maestro = $pdo->prepare("DELETE FROM usuarios WHERE usuario_id = :usuario_id AND role_id = 2");
+    $comando_eliminar_maestro->execute(['usuario_id' => $usuario_id]);
 }
+
+// Redirigir al usuario de regreso a la página de maestros
+header("Location: /views/admin/maestros.php");
 ?>

@@ -1,4 +1,12 @@
 <!-- archivo create_maestro.php dentro de admin dentro de views -->
+<?php
+session_start();
+if (!isset($_SESSION["role"])  || $_SESSION["role"] !== 1 ) {
+    echo "No existe una sesion iniciada o no tienes permisos para acceder a esta pagina";
+    header("Location: /index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,29 +20,31 @@
 <body>
     <div class="h-screen flex flex-col justify-center items-center">
         <h1>Agregar Maestro</h1>
-        <form action="/handle_db/admin/create_maestro.php" class="flex flex-col border" method="post">
+        <form action="/handle_db/admin/create_clase.php" class="flex flex-col border" method="post">
 
             <label>Nombre de la materia</label>
-            <input type="texto" name="materia" placeholder="">
+            <input type="texto" name="materia_nombre" placeholder="">
 
             
 
-            <label for="materia">Maestros disponibles para la clase</label>
-                <select id="materia" name="materia_id">
+            <label for="maestros">Maestros disponibles para la clase</label>
+                <select id="maestro" name="usuario_id" optional>
+                    <option value="">Sin asignar</option>
                     <?php
                     require_once($_SERVER["DOCUMENT_ROOT"] . "/config/database.php");
 
                     // (1) Definir SQL
-                    $comando = $pdo->prepare("SELECT * FROM usuarios WHERE id = 2");
+                    $comando = $pdo->prepare("SELECT usuarios.* FROM usuarios LEFT JOIN maestros_materias ON usuarios.usuario_id = maestros_materias.maestro_id WHERE maestros_materias.maestro_id IS NULL AND usuarios.role_id = 2");
 
                     // (3)Ejecutar SQL
                     $comando->execute();
 
                     // (4) Recuperar informacion
                     $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($resultado as $clase) {
+                    
+                    foreach($resultado as $maestro) {
                     ?>
-                        <option name="materia_id" value="<?= $clase["materia_id"] ?>"><?= $clase["materia_nombre"] ?></option>
+                        <option optional name="usuario_id" value="<?= $maestro["usuario_id"] ?>"><?= $maestro["usuario_nombre"] ?></option>
                     <?php
                     }
                     ?>
